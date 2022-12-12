@@ -116,7 +116,7 @@ The variable should be declared inside the loop, for exemple in
 ```c
 struct mqtt_queued_message *curr;
 //code
-    
+
 for(curr = mqtt_mq_get(&(client->mq), 0); curr >= client->mq.queue_tail; --curr) {
 // code
 }
@@ -124,7 +124,6 @@ for(curr = mqtt_mq_get(&(client->mq), 0); curr >= client->mq.queue_tail; --curr)
 
 the code should be written like :
 
-```c
 ```c
 for(struct mqtt_queud_message *curr = mqtt_mq_get(&(client->mq), 0); curr >= client->mq.queue_tail; --curr) {
 // code
@@ -152,3 +151,7 @@ Should be changed by
 ```c
 void* dest = client->recv_buffer.mem_start;
 ```
+
+## Conclusion
+
+Overall, the code has a good quality. The main issue is the readability of the code. It can be very hard to understand it and therefore to maintain it. It could have an impact on the development of the code but also in the correction of errors and security breachs. 
