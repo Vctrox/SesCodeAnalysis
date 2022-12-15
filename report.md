@@ -279,13 +279,13 @@ Vulnerabilities for **mqtt.c**
 
 #### 1. Cognitive Complexity (2 cases)
 
-It concerned the functions ```ssize_t __mqtt_send(struct mqtt_client *client)``` and ```ssize_t __mqtt_recv(struct mqtt_client *client)```. This complexity comes from the number of ```if, else if, else, for, while, switch``` but also the number of nest.
+It concerned the functions ```ssize_t __mqtt_send (struct mqtt_client *client)``` and ```ssize_t __mqtt_recv (struct mqtt_client *client)```. This complexity comes from the number of ```if, else if, else, for, while, switch``` but also the number of nests. 
 
-The issue with a high cognitive complexity is that the code will be more difficulte to understand and so to maitain. If a bug or a secrurity breach were to be discovered, it would take more time to resolve it. A solution to reduce the complexity could be to create separated functions in order to divide thoses function into multiple parts.  
+The issue with a high cognitive complexity is that the code will be more difficult to understand and so to maintain. If a bug or a security breach were to be discovered, it would take more time to resolve it. A solution to reduce the complexity could be to create separate functions in order to divide those functions into multiple parts.
 
 #### 2. Nest of more than 3 statement (6 cases)
 
-This issue is located in many part of the code, a nest is an accumulation of statement like ```if```, here is an exemple of a nest of 3:
+This issue is located in many parts of the code, a nest is an accumulation of statement like ```if```, here is an example of a nest of 3:
 
 ```c
 if{
@@ -299,11 +299,11 @@ if{
 }
 ```
 
-Nest like this one are difficult to read and to understand. Similary to the first issue, the code will be harder to maintain
+Nest like this one are difficult to read and to understand. Similarly to the first issue, the code will be harder to maintain
 
 #### 3. Ellipsis notation (2 cases)
 
-Issues of ellipsis notation are in the ```ssize_t mqtt_pack_subscribe_request(uint8_t *buf, size_t bufsz, unsigned int packet_id, ...)``` and ```ssize_t mqtt_pack_unsubscribe_request(uint8_t *buf, size_t bufsz, unsigned int packet_id, ...)``` functions. The ```...``` at the end means that an undifined number of argument can be input. For exemple
+Issues of ellipsis notation are in the ```ssize_t mqtt_pack_subscribe_request(uint8_t *buf, size_t bufsz, unsigned int packet_id, ...)``` and ```ssize_t mqtt_pack_unsubscribe_request(uint8_t *buf, size_t bufsz, unsigned int packet_id, ...)``` functions. The ```...``` at the end means that an undefined number of arguments can be input. For example
 
 ```c
 double average(int count, ...){
@@ -322,13 +322,13 @@ So average can have 2, 3, 7 or more argument. First it bypasses the compiler typ
 
 #### 4. Too high number of parameters (2 cases)
 
-According to sonarqube a maximum of 7 arguments can be used, according to the C guidline, the maximum should be 4. This can lead to 2 issues : 
+According to sonarqube a maximum of 7 arguments can be used, according to the C guideline, they recommend a number of 4 arguments. This can lead to 2 issues : 
 
-- Componenet values are no longer protected by an enforced invariant which leads to errors
+- The componenet values are no longer protected by an enforced invariant which leads to errors
 
 - The function is probably doing more than one job violating the "one function, one responsibility rule"
 
-The solution would be to fractione the function into 2 or more. Also, objects could be created contening thoses parameters.
+The solution would be to fraction the function into 2 or more. Also, objects could be created contening those parameters.
 
 #### 5. Unmerdge if statement (2 cases)
 
@@ -389,11 +389,11 @@ for(struct mqtt_queud_message *curr = mqtt_mq_get(&(client->mq), 0); curr >= cli
 }
 ```
 
-It is a better way to write the code for 3 differents reasons:
+It is a better way to write the code for 3 different reasons:
 
 - A better readability
 
-- The variable can't be accenditely reused outside of the loop
+- The variable can't be accidentally reused outside of the loop
 
 - Resources are not retained longer than necessary
 
@@ -413,4 +413,8 @@ void* dest = client->recv_buffer.mem_start;
 
 ## Conclusion
 
-Overall, the code has a good quality. The main issue is the readability of the code. It can be very hard to understand it and therefore to maintain it. It could have an impact on the development of the code but also in the correction of errors and security breachs. 
+Overall, the code has a good quality. The main issue is the readability of the code. However, considering that this is an embedded software, the size of code matters. Making the code as small as possible is a good idea. But, the code can be very hard to understand for other people. Maintaining it becomes difficult and it could have an impact on the development of the code. But it could also have an impact in the correction of errors and security breaches. 
+
+Sonarqube is a great tool which, despite the fact that it was complicated to use, allow developers to increase the quality of their code at different level (security, readibility, ...). It is very important to have tools like this one considering that the cost of resolving a bug increase during any project development. It could rise up, to a multiplication by 100 of the cost during the production phase.
+
+The 13 of December ChatGPT was released by OpenAI. It is an artificial intelligence which aims to mimic a human to human conversation. ChatGPT has prover itself to be very useful for developers. In fact, we can ask it to create an entire web application. Moreover, this AI can also find bugs and security breach in code. This kind of advancement could make obsolete tools like sonarqube. Even in the reliability aspect of the code considering that we can ask to ChatGPT to explain to us entire page of code. But the reliability of ChatGPT isn't perfect and website like stackoverflaw banned ChatGPT answer.
